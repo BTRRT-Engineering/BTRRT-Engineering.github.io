@@ -29,7 +29,7 @@
 		$.getJSON(nycMapUrl,function(data1){
 			nycMap = data1;
 			$.getJSON(hospitalsUrl,function(data2){
-				hospitals = data2;
+				hospitals = Highcharts.geojson(data2, 'mappoint');
 				$('#container').highcharts('Map', {
 					series: [{
 						mapData: nycMap
