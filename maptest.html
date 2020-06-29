@@ -30,14 +30,32 @@
 			nycMap = data1;
 			$.getJSON(hospitalsUrl,function(data2){
 				hospitals = Highcharts.geojson(data2, 'mappoint');
+				hospitals.forEach(function (hospital){
+					hospital.name = hospital.properties.facname;
+				});
+				
 				$('#container').highcharts('Map', {
+					title: {
+						text: 'NYC Test Map'
+					},
+
+					mapNavigation: {
+						enabled: true
+					},
 					series: [{
-						mapData: nycMap
+						name: "Zip Codes",
+						mapData: nycMap,
+						tooltip: {
+							pointFormat: '{point.name}'
+						}
 					},{
 						type: 'mappoint',
 						name: 'Hospitals',
 						color: Highcharts.getOptions().colors[1],
-						data: hospitals
+						data: hospitals,
+						tooltip: {
+							pointFormat: '{point.name}'
+						}
 					}]
 				});
 			});
